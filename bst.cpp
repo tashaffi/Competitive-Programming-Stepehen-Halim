@@ -43,6 +43,12 @@ public:
 
     }
 
+    int countLeaves(BST* root){
+        if(!root) return 0;
+        if(!root->left && !root->right) return 1;
+        return countLeaves(root->left) + countLeaves(root->right);
+    }
+
     BST* remove(BST* root, int key){
         if(!root) return NULL;
         if(key < root->key) {
@@ -60,7 +66,9 @@ public:
                 return temp;
             }else {
                 BST* suc = successor(root);
+                int temp = root->key;
                 root->key = suc->key;
+                suc->key = temp;
                 root->right = remove(root->right, suc->key);
                 return root;
 
@@ -96,8 +104,10 @@ int main(){
   
     cout<<"\nDelete 50\n"; 
     root = root->remove(root, 50); 
-    cout<<"Inorder traversal of the modified tree \n"; 
     root->inorder(root); 
+
+    cout << "\n";
+    cout << root->countLeaves(root) << endl;
   
     return 0; 
 }
