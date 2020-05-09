@@ -49,6 +49,30 @@ public:
         return countLeaves(root->left) + countLeaves(root->right);
     }
 
+    int degreeTwo(BST* root){
+        if(!root) return 0;
+         
+        if(root->left && root->right) return degreeTwo(root->left)+ degreeTwo(root->right) + 1;
+        return degreeTwo(root->left)+ degreeTwo(root->right);
+    }
+
+    int internalNodeCount(BST* root){
+        if(!root) return 0;
+         
+        if(root->left || root->right) return internalNodeCount(root->left)+internalNodeCount(root->right)+1;
+        return internalNodeCount(root->left)+ internalNodeCount(root->right);
+    }
+
+
+    int degreeOne(BST* root){
+        if(!root) return 0;
+         
+        if((!root->left)^(!root->right)) return degreeOne(root->left)+ degreeOne(root->right) + 1;
+
+        return degreeOne(root->left)+ degreeOne(root->right);
+    }
+
+
     BST* remove(BST* root, int key){
         if(!root) return NULL;
         if(key < root->key) {
@@ -108,6 +132,11 @@ int main(){
 
     cout << "\n";
     cout << root->countLeaves(root) << endl;
+
+    cout << "\n";
+    cout << root->degreeOne(root) << endl;
+    
+    
   
     return 0; 
 }
